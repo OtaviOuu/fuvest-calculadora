@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Notas</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            width: 100%;
+            max-width: 350px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #666;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        #calcular {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 100%;
+        }
+
+        #calcular:hover {
+            background-color: #45a049;
+        }
+
+        #resultado {
+            margin-top: 20px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .error {
+            color: red;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Calculadora de Notas</h1>
+        
+        <div class="input-group">
+            <label for="acertos">Acertos Primeira Fase:</label>
+            <input type="number" id="acertos" placeholder="Digite os acertos" min="0" max="90">
+        </div>
+
+        <div class="input-group">
+            <label for="pt">Nota PT (0-50):</label>
+            <input type="number" id="pt" placeholder="Nota PT" min="0" max="50">
+        </div>
+
+        <div class="input-group">
+            <label for="red">Nota RED (0-50):</label>
+            <input type="number" id="red" placeholder="Nota RED" min="0" max="50">
+        </div>
+
+        <div class="input-group">
+            <label for="mat">Nota MAT (0-100):</label>
+            <input type="number" id="mat" placeholder="Nota MAT" min="0" max="100">
+        </div>
+
+        <div class="input-group">
+            <label for="fis">Nota FIS (0-100):</label>
+            <input type="number" id="fis" placeholder="Nota FIS" min="0" max="100">
+        </div>
+
+        <button id="calcular">Calcular Nota</button>
+
+        <div id="resultado"></div>
+        <div id="erro" class="error"></div>
+    </div>
+
+    <script>
+        function calcularNota() {
+            const acertos = parseInt(document.getElementById('acertos').value);
+            const pt = parseFloat(document.getElementById('pt').value);
+            const red = parseFloat(document.getElementById('red').value);
+            const mat = parseFloat(document.getElementById('mat').value);
+            const fis = parseFloat(document.getElementById('fis').value);
+
+            const resultadoDiv = document.getElementById('resultado');
+            const erroDiv = document.getElementById('erro');
+
+            // Limpar erros anteriores
+            resultadoDiv.textContent = '';
+            erroDiv.textContent = '';
+
+            // Validações
+            if (isNaN(acertos) || isNaN(pt) || isNaN(red) || isNaN(mat) || isNaN(fis)) {
+                erroDiv.textContent = 'Por favor, preencha todos os campos!';
+                return;
+            }
+
+            // Validar intervalos
+            if (!(
+                pt >= 0 && pt <= 50 && 
+                red >= 0 && red <= 50 && 
+                mat >= 0 && mat <= 100 && 
+                fis >= 0 && fis <= 100
+            )) {
+                erroDiv.textContent = 'Notas fora dos intervalos permitidos!';
+                return;
+            }
+
+            // Cálculo primeira fase
+            const f1 = 100 * acertos / 90;
+
+            // Cálculo segunda fase
+            const f2 = pt + red + mat + fis;
+
+            // Nota final
+            const f = f1 + f2;
+            const final = f * 1000 / 400;
+
+            // Exibir resultado
+            resultadoDiv.textContent = `Nota Final: ${final.toFixed(2)}`;
+        }
+
+        document.getElementById('calcular').addEventListener('click', calcularNota);
+    </script>
+</body>
+</html>
