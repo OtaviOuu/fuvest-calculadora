@@ -127,17 +127,14 @@
             const resultadoDiv = document.getElementById('resultado');
             const erroDiv = document.getElementById('erro');
 
-            // Limpar erros anteriores
             resultadoDiv.textContent = '';
             erroDiv.textContent = '';
 
-            // Validações
             if (isNaN(acertos) || isNaN(pt) || isNaN(red) || isNaN(mat) || isNaN(fis)) {
                 erroDiv.textContent = 'Por favor, preencha todos os campos!';
                 return;
             }
 
-            // Validar intervalos
             if (!(
                 pt >= 0 && pt <= 50 && 
                 red >= 0 && red <= 50 && 
@@ -148,17 +145,13 @@
                 return;
             }
 
-            // Cálculo primeira fase
             const f1 = 100 * acertos / 90;
 
-            // Cálculo segunda fase
             const f2 = pt + red + mat + fis;
 
-            // Nota final
             const f = f1 + f2;
             const final = f * 1000 / 400;
 
-            // Exibir resultado
             resultadoDiv.textContent = `Nota Final: ${final.toFixed(2)}`;
         }
 
