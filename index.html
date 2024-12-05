@@ -146,15 +146,10 @@
                 return;
             }
 
-            // Primeira fase: acertos de 0-90 transformados para 100 pontos
             const f1 = 100 * acertos / 90;
 
-            // Segunda fase: soma das 4 notas de 0-50
             const f2 = pt + red + mat + fis;
 
-            // Verificação para garantir que nota máxima seja 1000
-            // Total máximo de pontos = 100 (primeira fase) + 200 (segunda fase)
-            // 1000 / (100 + 200) = 1000 / 300
             const f = f1 + f2;
             const final = (f / 300) * 1000;
 
